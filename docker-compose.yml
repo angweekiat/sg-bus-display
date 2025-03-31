@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  sgbus:
+    build: .
+    env_file: ".env"
+    container_name: sgbus
+    restart: always
+    ports:
+      - "80:80"

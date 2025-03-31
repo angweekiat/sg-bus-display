@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bus Timings Display</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        box-sizing: border-box;
+      }
+ 
+      .main-container {
+        --bus-width: 200px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(var(--bus-width), 1fr));
+        grid-auto-flow: row dense;
+        background: rgb(255, 255, 255);
+        gap: 10px;
+        padding: 10px;
+        overflow: hidden;
+      }
+ 
+      .bus-station {
+        flex: 1;
+        background: #fefeff;
+        margin: 10px 0 10px 0;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        align-items: center;
+      }
+ 
+      h2 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+ 
+      .station-header {
+        font-weight: bold;
+        margin-bottom: 15px; /* Adds spacing between each bus service row */
+        font-size: 150%;
+      }
+ 
+      .bus-services {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(var(--bus-width), 1fr));
+        gap: 10px;
+        padding: 10px;
+      }
+ 
+      .service-number {
+        box-sizing: border-box;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+      }
+ 
+      .bus-service {
+        display: flex;
+        border-radius: 5px;
+        padding: 8px;
+        align-items: center; /* Aligns items vertically in the center */
+        margin-bottom: 5px; /* Adds spacing between each bus service row */
+        background: #5252f36b;
+        height: 80px;
+      }
+ 
+      .timings {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        height: 100%;
+        border-radius: 5px;
+        flex-grow: 1;
+        gap: 8px;
+        align-items: center;
+        margin-left: 8px; /* Adds spacing between each bus service row */
+        font-family: monospace;
+      }
+ 
+      .timing {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-width: 30%; /* Ensure each element takes 25% width */
+        text-align: center; /* Center the text within each div */
+        border-radius: 8px;
+        background: #e7e7e73a;
+        color: #585858;
+        height: 100%;
+        font-size: 10px;
+        font-weight: bold;
+      }
+ 
+      .non-number-timing {
+        font-size: 150%;
+        text-align: center; /* Center the text within each div */
+        justify-content: center;
+        border-radius: 8px;
+        color: #585858;
+        height: 100%;
+        box-sizing: border-box;
+        font-weight: bold;
+        line-height: 1.7;
+      }
+ 
+      .arr-timing {
+        font-size: 150%;
+        text-align: center; /* Center the text within each div */
+        justify-content: center;
+        border-radius: 8px;
+        height: 100%;
+        box-sizing: border-box;
+        background-color: black !important;
+        color: lightgreen !important;
+        font-weight: bold;
+        line-height: 1.7;
+      }
+ 
+      .minutes {
+        min-width: 30%; /* Ensure each element takes 25% width */
+        text-align: center; /* Center the text within each div */
+        font-size: 100%;
+        color: #585858;
+      }
+ 
+      .arr-timing .minutes {
+        display: none;
+      }
+ 
+      .service-number {
+        padding: 8px;
+        min-width: 25%; /* Ensure each element takes 25% width */
+        border-radius: 8px;
+        background: #5253f3;
+        font-size: 35px;
+        color: #e8e8e8;
+      }
+ 
+      .flex-parent-element {
+        display: flex;
+        width: 100%;
+      }
+ 
+      .station-header small {
+        background-color: #5253f3;
+        color: white;
+        padding: 4px;
+        border-radius: 8px;
+        margin-right: 8px;
+      }
+ 
+      .station-header strong {
+        color: rgb(255, 21, 21);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-container">
+      
+
+      <div class="bus-station" id="station-75131">
+        <div class="station-header"><small>75131</small>Blks 701/702</div>
+ 
+        <div class="bus-services" id="services-75131">
+          <!-- Bus service cards will be dynamically inserted here -->
+        </div>
+      </div>
+
+      <div class="bus-station" id="station-15139">
+        <div class="station-header"><small>15139</small>Kent Ridge</div>
+ 
+        <div class="bus-services" id="services-15139">
+          <!-- Bus service cards will be dynamically inserted here -->
+        </div>
+      </div>
+
+      <div class="bus-station" id="station-18279">
+        <div class="station-header">
+          <small>18279</small><strong font-size="250%">Opposite</strong> Block 85
+        </div>
+ 
+        <div class="bus-services" id="services-18279">
+          <!-- Bus service cards will be dynamically inserted here -->
+        </div>
+      </div>
+
+      <div class="bus-station" id="station-18271">
+        <div class="station-header"><small>18271</small>Block 85</div>
+ 
+        <div class="bus-services" id="services-18271">
+          <!-- Bus service cards will be dynamically inserted here -->
+        </div>
+      </div>
+
+      
+      <div class="bus-station" id="station-75139">
+        <div class="station-header"><small>75139</small>Opposite Home</div>
+ 
+        <div class="bus-services" id="services-75139">
+          <!-- Bus service cards will be dynamically inserted here -->
+        </div>
+      </div>
+
+      <div class="bus-station" id="station-75079">
+        <div class="station-header"><small>75079</small>800+</div>
+ 
+        <div class="bus-services" id="services-75079">
+          <!-- Bus service cards will be dynamically inserted here -->
+        </div>
+      </div>
+
+      
+
+      <div class="bus-station" id="station-75009">
+        <div class="station-header"><small>75009</small>Tampines Bus Interchange</div>
+ 
+        <div class="bus-services" id="services-75009">
+          <!-- Bus service cards will be dynamically inserted here -->
+        </div>
+      </div>
+
+    </div>
+    <script>
+ 
+      function fetchBusData() {
+        const stations = [18279, 18271, 75131, 15139, 75139, 75009, 75079];
+        stations.forEach((stationId) => {
+          fetch(`http://127.0.0.1/v2/singlebusdata/${stationId}`)
+            .then((response) => response.json())
+            .then((data) => {
+              const servicesContainer = document.getElementById(
+                `services-${stationId}`
+              );
+              while (servicesContainer.firstChild) {
+                servicesContainer.removeChild(servicesContainer.lastChild);
+              }
+ 
+              data.forEach((service) => {
+                const serviceDiv = document.createElement("div");
+                serviceDiv.className = "bus-service";
+ 
+                const serviceNoContainer = document.createElement("div");
+                serviceNoContainer.className = "service-number";
+                serviceNoContainer.innerHTML = `<div>${service.ServiceNo}</div>`;
+                serviceDiv.appendChild(serviceNoContainer);
+ 
+                const timingsContainer = document.createElement("div");
+                timingsContainer.className = "timings";
+ 
+                var altCnt = 0;
+                service.Timings.forEach((time) => {
+                  var timeStr = formatTime(time);
+ 
+                  const timeDiv = document.createElement("div");
+                  const timeTextDiv = document.createElement("div");
+ 
+                  timeDiv.style.strokeWidth = "299%";
+                  timeTextDiv.textContent = timeStr;
+                  if (+timeStr) {
+                    timeDiv.className = "timing";
+                  } else {
+                    if (timeStr == "ARR") {
+                      timeDiv.className = "arr-timing";
+                    } else {
+                      timeDiv.className = "non-number-timing";
+                    }
+                  }
+ 
+                  const minDiv = document.createElement("div");
+                  minDiv.className = "minutes";
+                  if (+timeStr) {
+                    minDiv.textContent = "mins";
+                    timeDiv.style.fontSize = "30px";
+                  } else {
+                    minDiv.textContent = "";
+                  }
+                  timeDiv.style.fontSize = "30px";
+ 
+                  minDiv.style.fontSize = "30%";
+                  if (altCnt == 0) {
+                    minDiv.style.backgroundColor = "#FFFFFF";
+                    timeDiv.style.backgroundColor = "#FFFFFF";
+                    minDiv.style.color = "#000000";
+                    timeDiv.style.color = "#000000";
+                  }
+                  altCnt += 1;
+                  timeDiv.appendChild(timeTextDiv);
+                  timeDiv.appendChild(minDiv);
+                  timingsContainer.appendChild(timeDiv);
+                });
+ 
+                serviceDiv.appendChild(timingsContainer);
+                servicesContainer.appendChild(serviceDiv);
+              });
+            });
+        });
+      }
+ 
+      function formatTime(seconds) {
+        if (seconds == "-") {
+          return "N/A";
+        }
+        if (seconds < 60) {
+          return "ARR";
+        }
+        const minutes = Math.floor(seconds / 60);
+        return `${minutes}`;
+      }
+ 
+      fetchBusData();
+    </script>
+  </body>
+</html>
