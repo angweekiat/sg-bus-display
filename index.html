@@ -230,7 +230,7 @@
       function fetchBusData() {
         const stations = [18279, 18271, 75131, 15139, 75139, 75009, 75079];
         stations.forEach((stationId) => {
-          fetch(`http://127.0.0.1/v2/singlebusdata/${stationId}`)
+          fetch(`/v2/singlebusdata/${stationId}`)
             .then((response) => response.json())
             .then((data) => {
               const servicesContainer = document.getElementById(

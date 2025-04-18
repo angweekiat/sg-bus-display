@@ -1,4 +1,4 @@
-from flask import Flask, request, Response, jsonify, send_from_directory
+from flask import Flask, request, Response, jsonify, send_from_directory, send_file
 from flask_cors import CORS
 from datetime import datetime, timezone
 import os
@@ -7,7 +7,7 @@ import requests
 app = Flask(__name__)
 CORS(app)  # Enable CORS to allow index.html to hit server
 ip_addr = "0.0.0.0"
-port = 80
+port = 5000
  
 def single_bus_stop_data(bus_stop_code : int) -> dict :
  
@@ -57,7 +57,7 @@ def single_bus_stop_data(bus_stop_code : int) -> dict :
 def singlebusdata_v2(bus_stop_id):
     return jsonify(single_bus_stop_data(bus_stop_id))
  
-@app.route('/index', methods=['GET'])
+@app.route('/bus', methods=['GET'])
 def send_index():
     server_ip = request.host.split(':')[0]
     print(server_ip)
@@ -67,7 +67,6 @@ def send_index():
     with open(file_path, 'r') as file:
         content = file.read()
  
-    content = content.replace('127.0.0.1', f'{server_ip}:{port}')
     return Response(content, content_type='text/html')
 
 if __name__ == '__main__':

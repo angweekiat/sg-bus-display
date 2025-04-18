@@ -1,0 +1,130 @@
+{
+    "apps": {
+        "http": {
+            "servers": {
+                "srv0": {
+                    "listen": [
+                        ":443"
+                    ],
+                    "logs": {
+                        "logger_names": {
+                            "coveredwalks.duckdns.org": [
+                                "log0"
+                            ]
+                        }
+                    },
+                    "routes": [
+                        {
+                            "handle": [
+                                {
+                                    "handler": "subroute",
+                                    "routes": [
+                                        {
+                                            "handle": [
+                                                {
+                                                    "handler": "reverse_proxy",
+                                                    "upstreams": [
+                                                        {
+                                                            "dial": "sgbus:5000"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "match": [
+                                {
+                                    "host": [
+                                        "coveredwalks.duckdns.org"
+                                    ]
+                                }
+                            ],
+                            "terminal": true
+                        }
+                    ]
+                },
+                "srv1": {
+                    "listen": [
+                        ":80"
+                    ],
+                    "logs": {
+                        "logger_names": {
+                            "127.0.0.1": [
+                                "log1"
+                            ],
+                            "165.22.98.255": [
+                                "log1"
+                            ]
+                        }
+                    },
+                    "routes": [
+                        {
+                            "handle": [
+                                {
+                                    "handler": "subroute",
+                                    "routes": [
+                                        {
+                                            "handle": [
+                                                {
+                                                    "handler": "reverse_proxy",
+                                                    "upstreams": [
+                                                        {
+                                                            "dial": "sgbus:5000"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "match": [
+                                {
+                                    "host": [
+                                        "127.0.0.1",
+                                        "165.22.98.255"
+                                    ]
+                                }
+                            ],
+                            "terminal": true
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "logging": {
+        "logs": {
+            "default": {
+                "exclude": [
+                    "http.log.access.log0",
+                    "http.log.access.log1"
+                ]
+            },
+            "log0": {
+                "encoder": {
+                    "format": "console"
+                },
+                "include": [
+                    "http.log.access.log0"
+                ],
+                "writer": {
+                    "output": "stdout"
+                }
+            },
+            "log1": {
+                "encoder": {
+                    "format": "console"
+                },
+                "include": [
+                    "http.log.access.log1"
+                ],
+                "writer": {
+                    "output": "stdout"
+                }
+            }
+        }
+    }
+}
