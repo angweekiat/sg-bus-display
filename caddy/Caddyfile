@@ -1,0 +1,17 @@
+xxx.duckdns.org {
+    reverse_proxy sgbus:5000
+
+    log {
+        output stdout
+        format console
+    }
+}
+
+http://127.0.0.1 {
+    reverse_proxy sgbus:5000
+
+    log {
+        output stdout
+        format console
+    }
+}

@@ -5,7 +5,6 @@ import os
 import requests
  
 app = Flask(__name__)
-CORS(app)  # Enable CORS to allow index.html to hit server
 ip_addr = "0.0.0.0"
 port = 5000
  
@@ -13,7 +12,7 @@ def single_bus_stop_data(bus_stop_code : int) -> dict :
  
     api_url = 'https://datamall2.mytransport.sg/ltaodataservice/v3/BusArrival'
     headers = {
-        # Replace with your actual key, request from https://datamall.lta.gov.sg/content/datamall/en/request-for-api.html
+        # API can be requested from https://datamall.lta.gov.sg/content/datamall/en/request-for-api.html
         'AccountKey': os.getenv("API_KEY"),
         'accept': 'application/json'
     }
